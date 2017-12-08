@@ -1,9 +1,9 @@
 module.exports = {
-    name: 'core.bindings',
+    name: 'core.plugin.bindings',
     dependencies: [
-        'imports.react',
-        'imports.prop-types',
-        'imports.create-react-class'
+        'core.import.react',
+        'core.import.prop-types',
+        'core.import.create-react-class'
     ],
     init(definition, done) {
 
