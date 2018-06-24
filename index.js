@@ -8,6 +8,27 @@ module.exports = {
     init(definition, done) {
 
         var core = this;
+
+        function isSimilar(a, b){
+            var typeA = core.typeOf(a);
+            var typeB = core.typeOf(b);
+            if(typeA !== typeB){ return false; }
+            if(typeA === 'array'){
+                if(a.length !== b.length){ return false; }
+                for(var i = 0; i < a.length; i++){
+                    if(!isSimilar(a[i], b[i])){ return false; }
+                }
+                return true;
+            }
+            if(typeA === 'object'){
+                for(var m in a){
+                    if(!isSimilar(a[m], b[m])){ return false; }
+                }
+                return true;
+            }
+            return a === b;
+        }
+
         var { createReactClass, PropTypes, React } = core.imports;
 
         var Bindings = createReactClass({
@@ -24,7 +45,15 @@ module.exports = {
                 }
                 return this.watch(bindings);
             },
+            componentWillReceiveProps(newProps){
+                if(newProps.bindings !== this.props.bindings){
+                    if(!isSimilar(newProps.bindings, this.props.bindings)){
+                        this.setState(this.watch(newProps.bindings));  
+                    }
+                }
+            },
             watch(bindings) {
+                this.isSingle = false;
                 if (Array.isArray(bindings)) {
                     this.isSingle = true;
                     bindings = {
