@@ -3,7 +3,7 @@
 component bindings for `core.tree`.
 
 
-### installing
+
 
 plugin depends on:
 <div>
@@ -21,7 +21,10 @@ plugin depends on:
 <div>
   <a href="https://github.com/ido-ofir/core.plugin.tree">core.plugin.tree</a>
 </div>
-```
+
+### installing
+
+```sh
 npm i core.plugin.bindings
 ```
 
