@@ -48,13 +48,16 @@ core.plugin([
 ```jsx
 {
     // in some component
+    changeA(){
+        core.set('time', new Date().toISOString())
+    },
     render(){
         return (
             <div>
                 { 
-                    core.bind('a', a => 
-                      <div>      { /* this renders anytime 'a' changes */ }
-                          { a }
+                    core.bind('time', time => 
+                      <div>      { /* this renders anytime 'time' changes */ }
+                          { time }
                       </div>
                     )
                 }
