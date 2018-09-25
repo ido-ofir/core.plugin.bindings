@@ -48,7 +48,7 @@ core.plugin([
 ```jsx
 {
     // in some component
-    changeA(){
+    changeTime(){
         core.set('time', new Date().toISOString())
     },
     render(){
@@ -61,6 +61,7 @@ core.plugin([
                       </div>
                     )
                 }
+                <button onClick={ this.changeTime }>Change</button>
             </div>
         );
     }
