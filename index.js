@@ -1,6 +1,7 @@
 module.exports = {
     name: 'core.plugin.bindings',
     dependencies: [
+        'core.plugin.tree',
         'core.import.react',
         'core.import.prop-types',
         'core.import.create-react-class'
@@ -32,6 +33,7 @@ module.exports = {
         var { createReactClass, PropTypes, React } = core.imports;
 
         var Bindings = createReactClass({
+            displayName: 'core.Bindings',
             propTypes: {
                 bindings: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string]),
                 render: PropTypes.func,
@@ -72,6 +74,21 @@ module.exports = {
                     this.setState(this.watcher.get());
                 }
             },
+            onChange(value){
+                var bindings = this.props.bindings;
+                if (!bindings) return null;
+                if (typeof bindings === 'string') {
+                    bindings = [bindings];
+                }
+                if(core.isObject(bindings)){
+                    for(var m in bindings){
+                        this.props.tree.set(m, value[m]);
+                    }
+                }
+                else{
+                    this.props.tree.set(bindings, value);
+                }
+            },
             componentWillUnmount() {
                 if (this.watcher) {
                     this.watcher.off('update', this.updateBindings);
@@ -80,7 +97,7 @@ module.exports = {
             render() {
                 var data = this.isSingle ? this.state.item : this.state;
                 var render = this.props.render || this.props.children;
-                var rendered = render(data);
+                var rendered = render(data, this.onChange);
                 return rendered || null;
             }
         });
@@ -90,7 +107,7 @@ module.exports = {
                 var props = {
                     bindings: bindings,
                     render: render,
-                    tree: this.tree
+                    tree: core.tree
                 };
                 return React.createElement(Bindings, props);
             },
