@@ -48,20 +48,18 @@ core.plugin([
 ```jsx
 {
     // in some component
-    changeTime(){
-        core.set('time', new Date().toISOString())
-    },
     render(){
         return (
             <div>
                 { 
-                    core.bind('time', time => 
-                      <div>      { /* this renders anytime 'time' changes */ }
-                          { time }
+                    core.bind(['count'], (count, changeCount) => 
+                      <div>      { /* this renders anytime 'count' changes */ }
+                          { count }
+                          <button onClick={ e => changeCount(count + 1) }>Change</button>
                       </div>
                     )
                 }
-                <button onClick={ this.changeTime }>Change</button>
+                
             </div>
         );
     }
