@@ -88,6 +88,7 @@ module.exports = {
                 else{
                     this.props.tree.set(bindings, value);
                 }
+                this.props.tree.commit();
             },
             componentWillUnmount() {
                 if (this.watcher) {
@@ -103,11 +104,12 @@ module.exports = {
         });
 
         core.extend({
-            bind(bindings, render) {
+            bind(bindings, render, props) {
                 var props = {
                     bindings: bindings,
                     render: render,
-                    tree: core.tree
+                    tree: core.tree,
+                    ...props
                 };
                 return React.createElement(Bindings, props);
             },
