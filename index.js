@@ -105,12 +105,11 @@ module.exports = {
 
         core.extend({
             bind(bindings, render, props) {
-                var props = {
+                var props = Object.assign({
                     bindings: bindings,
                     render: render,
-                    tree: core.tree,
-                    ...props
-                };
+                    tree: core.tree
+                }, props);
                 return React.createElement(Bindings, props);
             },
             Bindings: Bindings,

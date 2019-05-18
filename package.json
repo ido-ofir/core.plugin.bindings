@@ -1,6 +1,6 @@
 {
     "name": "core.plugin.bindings",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "component bindings for core.tree",
     "main": "index.js",
     "scripts": {
